@@ -13,8 +13,4 @@ public interface ArticleRepository extends JpaRepository<Article, String> {
 
     List<Article> getAllByStatus(Status status);
 
-   // @Query("SELECT a FROM Article a INNER JOIN " )
-   // List<Article> getAll();
-
-
 }

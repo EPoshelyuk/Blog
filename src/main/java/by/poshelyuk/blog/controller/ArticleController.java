@@ -30,18 +30,9 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(path = "/articles", produces="application/json")
+    @GetMapping("/articles")
     public ResponseEntity<List<Article>> getPublicArticles() {
         List<Article> articles = articleService.getPublicArticle();
-        if (CollectionUtils.isEmpty(articles)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(articles, HttpStatus.OK);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Article>> getAll() {
-        List<Article> articles = articleService.getAll();
         if (CollectionUtils.isEmpty(articles)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -54,7 +45,7 @@ public class ArticleController {
         return null;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         //TODO after adding spring sec.
         return null;

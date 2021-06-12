@@ -32,12 +32,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getAll() {
-
-        return articleRepository.findAll();
-    }
-
-    @Override
     public Article getById(String id) throws NotFoundException {
 
         return articleRepository.findById(id).orElseThrow(() -> new ArticleNotFoundException(id));

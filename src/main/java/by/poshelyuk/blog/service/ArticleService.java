@@ -12,8 +12,6 @@ public interface ArticleService {
 
     void addArticle(Article article);
 
-    List<Article> getAll();
-
     Article getById(String id) throws NotFoundException;
 
     void delete(String id);
