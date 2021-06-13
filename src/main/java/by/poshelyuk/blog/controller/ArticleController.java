@@ -24,16 +24,18 @@ public class ArticleController {
         return null;
     }
 
+    //+
     @PostMapping("/articles")
     public ResponseEntity<Article> addArticle(@RequestBody Article article) {
         articleService.addArticle(article);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //+
     @GetMapping("/articles")
     public ResponseEntity<List<Article>> getPublicArticles() {
         List<Article> articles = articleService.getPublicArticle();
-        if (CollectionUtils.isEmpty(articles)) {
+        if (articles.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(articles, HttpStatus.OK);

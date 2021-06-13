@@ -1,5 +1,5 @@
-package by.poshelyuk.blog.config;
-
+//package by.poshelyuk.blog.config;
+//
 //import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 //
 //public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

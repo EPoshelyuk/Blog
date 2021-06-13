@@ -51,7 +51,7 @@ public class CommentController {
     //DELETE /articles/:id/comments/:id - удалить, удалить может только автор комментария или поста
 
     @DeleteMapping("{articleId}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable String articleId, @PathVariable String commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable String articleId, @PathVariable String commentId) {
         //TODO
         return new ResponseEntity<>(HttpStatus.OK);
     }
