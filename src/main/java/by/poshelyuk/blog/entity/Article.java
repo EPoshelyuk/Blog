@@ -3,6 +3,7 @@ package by.poshelyuk.blog.entity;
 import by.poshelyuk.blog.entity.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.hibernate.annotations.*;
 

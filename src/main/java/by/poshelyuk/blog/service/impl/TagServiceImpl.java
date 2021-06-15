@@ -1,11 +1,10 @@
 package by.poshelyuk.blog.service.impl;
 
+import by.poshelyuk.blog.dao.ArticleDAO;
+import by.poshelyuk.blog.dao.TagDAO;
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.entity.Tag;
-import by.poshelyuk.blog.repository.ArticleRepository;
-import by.poshelyuk.blog.repository.TagRepository;
 import by.poshelyuk.blog.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,13 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class TagServiceImpl implements TagService {
 
-    private final TagRepository tagRepository;
-    private final ArticleRepository articleRepository;
+    private final TagDAO tagDAO;
+    private final ArticleDAO articleDAO;
 
-    @Autowired
-    public TagServiceImpl(TagRepository tagRepository, ArticleRepository articleRepository) {
-        this.tagRepository = tagRepository;
-        this.articleRepository = articleRepository;
+    public TagServiceImpl(TagDAO tagDAO, ArticleDAO articleDAO) {
+        this.tagDAO = tagDAO;
+        this.articleDAO = articleDAO;
     }
 
 
@@ -31,12 +29,12 @@ public class TagServiceImpl implements TagService {
     public List<Article> getArticlesByTags(List<String> tagNames) {
 
         List<Tag> tags = tagNames.stream()
-                .map(tagName -> tagRepository.findByName(tagName))
+                .map(tagDAO::findByName)
                 .collect(Collectors.toList());
 
         List<Article> articles = new ArrayList<>();
         for (Tag tag : tags) {
-            List<Article> allByTag = articleRepository.findAllByTag(tag);
+            List<Article> allByTag = articleDAO.getAllByTag(tag);
             articles.addAll(allByTag);
         }
         return articles;
@@ -46,7 +44,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Map<String, Integer> getTagCloud() {
 
-        List<Tag> tags = tagRepository.findAll();
+        List<Tag> tags = tagDAO.findAll();
 
         int count;
         HashMap<String, Integer> tagCloud = new HashMap<>();
@@ -56,6 +54,9 @@ public class TagServiceImpl implements TagService {
             tagCloud.put(tag.getName(), count);
         }
         return tagCloud;
+    }
 
+    public TagDAO getTagDAO() {
+        return tagDAO;
     }
 }

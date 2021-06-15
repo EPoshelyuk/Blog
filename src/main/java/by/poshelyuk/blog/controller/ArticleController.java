@@ -4,7 +4,6 @@ import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.service.ArticleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +16,8 @@ public class ArticleController {
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
+
+
 
     @PutMapping("/articles/{id}")
     public ResponseEntity<String> update(@PathVariable String id) {
@@ -32,13 +33,14 @@ public class ArticleController {
     }
 
     //+
-    @GetMapping("/articles")
+    @GetMapping(path = "/articles")
     public ResponseEntity<List<Article>> getPublicArticles() {
         List<Article> articles = articleService.getPublicArticle();
         if (articles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+      //  System.out.println(articles);
+        return ResponseEntity.status(HttpStatus.OK).body(articles);
     }
 
     @GetMapping("/my")

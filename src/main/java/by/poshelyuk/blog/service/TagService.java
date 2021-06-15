@@ -8,7 +8,6 @@ import java.util.Map;
 
 public interface TagService {
 
-
     List<Article> getArticlesByTags(List<String> tagNames);
 
     Map<String, Integer> getTagCloud();

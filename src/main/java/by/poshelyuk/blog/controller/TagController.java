@@ -22,7 +22,7 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping("/articles")
+    @GetMapping("/articles/tags")
     public ResponseEntity<List<Article>> getArticlesByTags(@RequestParam List<String> tagNames) {
         List<Article> articles = tagService.getArticlesByTags(tagNames);
         if (articles.isEmpty()) {

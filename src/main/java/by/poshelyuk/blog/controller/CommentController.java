@@ -21,14 +21,14 @@ public class CommentController {
         this.commentService = commentService;
 
     }
-
+//(-)
     @PostMapping("/{id}/comments")
     public ResponseEntity<String> addComment(@PathVariable String id) {
         //TODO
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @GetMapping("{id}/comments")
+    //(-)
+    @GetMapping("/{id}/comments")
     public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable String id) {
         List<Comment> comments = commentService.getByArticleId(id);
         if (CollectionUtils.isEmpty(comments)) {
@@ -36,9 +36,7 @@ public class CommentController {
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
-
-    //GET /articles/:id/comments/:id - просмотр комментария
-
+    //(-)
     @GetMapping("{articleId}/comments/{commentId}")
     public ResponseEntity<Comment> getCommentByIdAndArticleId(@PathVariable String articleId, @PathVariable String commentId) {
         Comment comment = commentService.getCommentByIdAndArticleId(articleId, commentId);
@@ -47,8 +45,6 @@ public class CommentController {
         }
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
-
-    //DELETE /articles/:id/comments/:id - удалить, удалить может только автор комментария или поста
 
     @DeleteMapping("{articleId}/comments/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable String articleId, @PathVariable String commentId) {
