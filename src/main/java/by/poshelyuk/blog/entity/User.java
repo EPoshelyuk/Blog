@@ -36,6 +36,7 @@ public class User {
     private String email;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @ToString.Exclude
     @Column(name = "CREATED_AT")
     private Date createdAt;
 

@@ -18,7 +18,6 @@ public class ArticleController {
     }
 
 
-
     @PutMapping("/articles/{id}")
     public ResponseEntity<String> update(@PathVariable String id) {
         //TODO after adding spring sec.
@@ -39,7 +38,7 @@ public class ArticleController {
         if (articles.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-      //  System.out.println(articles);
+        //  System.out.println(articles);
         return ResponseEntity.status(HttpStatus.OK).body(articles);
     }
 
@@ -55,4 +54,15 @@ public class ArticleController {
         return null;
     }
 
+    @GetMapping(path = "/filter")
+    public ResponseEntity<List<Article>> getSortedArticles(
+            @RequestParam(name = "skip", required = false, defaultValue = "1") Integer skip,
+            @RequestParam(name = "limit", required = false, defaultValue = "3") Integer limit,
+            @RequestParam(name = "sort", required = false) String sort,
+            @RequestParam(name = "order", required = false) String order
+
+    ) {
+        List<Article> articles = articleService.findAll(skip, limit, sort, order);
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
 }

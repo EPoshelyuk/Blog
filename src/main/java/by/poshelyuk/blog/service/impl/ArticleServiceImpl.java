@@ -3,7 +3,9 @@ package by.poshelyuk.blog.service.impl;
 import by.poshelyuk.blog.dao.ArticleDAO;
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.entity.enums.Status;
-import by.poshelyuk.blog.exception.ArticleNotFoundException;
+import by.poshelyuk.blog.filtration.Page;
+import by.poshelyuk.blog.filtration.impl.ArticleSortProvider;
+import by.poshelyuk.blog.queries.ArticleQueryRepository;
 import by.poshelyuk.blog.service.ArticleService;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,13 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleDAO articleDAO;
+    private final ArticleQueryRepository articleQueryRepository;
 
-    public ArticleServiceImpl(ArticleDAO articleDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ArticleQueryRepository articleQueryRepository) {
         this.articleDAO = articleDAO;
+        this.articleQueryRepository = articleQueryRepository;
     }
+
 
     @Override
     @Transactional
@@ -56,5 +61,10 @@ public class ArticleServiceImpl implements ArticleService {
         System.out.println(allByStatus);
         return allByStatus;
 
+    }
+    @Transactional
+    @Override
+    public List<Article> findAll(Integer skip, Integer limit, String sort, String order) {
+        return articleQueryRepository.findAll(new Page(skip, limit), new ArticleSortProvider(sort, order));
     }
 }

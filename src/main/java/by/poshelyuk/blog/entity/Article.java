@@ -51,10 +51,12 @@ public class Article {
     private User user;
 
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ManyToMany
+    @ToString.Exclude
     @JsonIgnore
     @JoinTable(name = "ARTICLES_TAGS",
             joinColumns = {@JoinColumn(name = "ARTICLE_ID")},
@@ -63,12 +65,4 @@ public class Article {
     private List<Tag> tags;
 
 }
-//    Article {
-//        id: Integer/UID,
-//                title: String,
-//                text: Text,
-//                status: Enum,
-//                author_id: Integer/UID
-//        created_at: Date,
-//                updated_at: Date
-//    }
+

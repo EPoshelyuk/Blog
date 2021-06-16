@@ -17,4 +17,7 @@ public interface ArticleService {
     void delete(String id);
 
     List<Article> getPublicArticle();
+
+    List<Article> findAll(Integer skip, Integer limit, String sort, String order);
 }
+

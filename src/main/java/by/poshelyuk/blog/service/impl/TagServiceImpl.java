@@ -3,9 +3,14 @@ package by.poshelyuk.blog.service.impl;
 import by.poshelyuk.blog.dao.ArticleDAO;
 import by.poshelyuk.blog.dao.TagDAO;
 import by.poshelyuk.blog.entity.Article;
+import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.Tag;
+import by.poshelyuk.blog.filtration.Page;
+import by.poshelyuk.blog.filtration.impl.CommentSortProvider;
+import by.poshelyuk.blog.queries.CommentQueryRepository;
 import by.poshelyuk.blog.service.TagService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,29 +24,31 @@ public class TagServiceImpl implements TagService {
     private final TagDAO tagDAO;
     private final ArticleDAO articleDAO;
 
-    public TagServiceImpl(TagDAO tagDAO, ArticleDAO articleDAO) {
+    public TagServiceImpl(TagDAO tagDAO, ArticleDAO articleDAO, CommentQueryRepository commentQueryRepository) {
         this.tagDAO = tagDAO;
         this.articleDAO = articleDAO;
     }
 
 
     @Override
-    public List<Article> getArticlesByTags(List<String> tagNames) {
+    @Transactional
+    public List<Article> getArticlesByTagsNames(List<String> tagNames) {
 
         List<Tag> tags = tagNames.stream()
                 .map(tagDAO::findByName)
                 .collect(Collectors.toList());
 
-        List<Article> articles = new ArrayList<>();
+       List<Article> articles = new ArrayList<>();
+
         for (Tag tag : tags) {
             List<Article> allByTag = articleDAO.getAllByTag(tag);
             articles.addAll(allByTag);
         }
         return articles;
-
     }
 
     @Override
+    @Transactional
     public Map<String, Integer> getTagCloud() {
 
         List<Tag> tags = tagDAO.findAll();
@@ -59,4 +66,9 @@ public class TagServiceImpl implements TagService {
     public TagDAO getTagDAO() {
         return tagDAO;
     }
+
+
+
+
+
 }

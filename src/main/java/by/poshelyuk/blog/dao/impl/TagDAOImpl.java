@@ -2,7 +2,6 @@ package by.poshelyuk.blog.dao.impl;
 
 import by.poshelyuk.blog.dao.TagDAO;
 import by.poshelyuk.blog.entity.Article;
-import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,11 +22,13 @@ public class TagDAOImpl implements TagDAO {
         Session session = sessionFactory.getCurrentSession();
         Query<Tag> query = session.createQuery("FROM Tag t where t.name=:tagName");
         query.setParameter("tagName", tagName);
-        return query.uniqueResult();
+        return query.getSingleResult();
     }
 
     @Override
     public List<Tag> findAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Query<Tag> query = session.createQuery("FROM Tag");
+        return query.list();
     }
 }

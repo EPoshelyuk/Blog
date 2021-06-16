@@ -21,10 +21,10 @@ public class TagController {
     public TagController(TagService tagService) {
         this.tagService = tagService;
     }
-
+//+
     @GetMapping("/articles/tags")
-    public ResponseEntity<List<Article>> getArticlesByTags(@RequestParam List<String> tagNames) {
-        List<Article> articles = tagService.getArticlesByTags(tagNames);
+    public ResponseEntity<List<Article>> getArticlesByTagsNames(@RequestParam List<String> tagNames) {
+        List<Article> articles = tagService.getArticlesByTagsNames(tagNames);
         if (articles.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

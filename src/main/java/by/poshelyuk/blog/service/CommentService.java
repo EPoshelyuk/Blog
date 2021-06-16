@@ -12,4 +12,6 @@ public interface CommentService {
     List<Comment> getByArticleId(String id);
 
     Comment getCommentByIdAndArticleId(String articleId, String commentId);
+
+    List<Comment> findAll(Integer skip, Integer limit, String sort, String order);
 }
