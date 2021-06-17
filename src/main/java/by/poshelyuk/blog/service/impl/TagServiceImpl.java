@@ -38,13 +38,19 @@ public class TagServiceImpl implements TagService {
                 .map(tagDAO::findByName)
                 .collect(Collectors.toList());
 
-       List<Article> articles = new ArrayList<>();
+        List<Article> articles = new ArrayList<>();
 
-        for (Tag tag : tags) {
-            List<Article> allByTag = articleDAO.getAllByTag(tag);
-            articles.addAll(allByTag);
-        }
+
+//        for (Tag tag : tags) {
+//            List<Article> allByTag = articleDAO.getAllByTag(tag);
+//            articles.addAll(allByTag);
+//        }
+
+        tags.forEach(tag -> articles.addAll(articleDAO.getAllByTag(tag)));
+
         return articles;
+
+
     }
 
     @Override
@@ -66,9 +72,6 @@ public class TagServiceImpl implements TagService {
     public TagDAO getTagDAO() {
         return tagDAO;
     }
-
-
-
 
 
 }

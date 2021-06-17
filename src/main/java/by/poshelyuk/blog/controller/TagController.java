@@ -5,6 +5,7 @@ import by.poshelyuk.blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class TagController {
     public ResponseEntity<List<Article>> getArticlesByTagsNames(@RequestParam List<String> tagNames) {
         List<Article> articles = tagService.getArticlesByTagsNames(tagNames);
         if (articles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(articles, HttpStatus.OK);
     }
@@ -35,7 +36,7 @@ public class TagController {
     public ResponseEntity<Map<String, Integer>> getTagsCloud() {
         Map<String, Integer> tagCloud = tagService.getTagCloud();
         if (tagCloud.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(tagCloud, HttpStatus.OK);
     }

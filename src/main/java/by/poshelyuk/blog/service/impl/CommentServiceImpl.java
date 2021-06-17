@@ -13,11 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-
 public class CommentServiceImpl implements CommentService {
 
     private final CommentDAO commentDAO;
-    private  final CommentQueryRepository commentQueryRepository;
+    private final CommentQueryRepository commentQueryRepository;
 
     public CommentServiceImpl(CommentDAO commentDAO, CommentQueryRepository commentQueryRepository) {
         this.commentDAO = commentDAO;
@@ -41,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment getCommentByIdAndArticleId(String articleId, String commentId) {
         return commentDAO.getByCommentIdAndArticleId(commentId, articleId);
     }
+
     @Transactional
     @Override
     public List<Comment> findAll(Integer skip, Integer limit, String sort, String order) {

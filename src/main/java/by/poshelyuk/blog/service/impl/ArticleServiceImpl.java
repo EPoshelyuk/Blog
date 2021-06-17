@@ -58,7 +58,6 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getPublicArticle() {
 
         List<Article> allByStatus = articleDAO.getAllByStatus(Status.PUBLIC);
-        System.out.println(allByStatus);
         return allByStatus;
 
     }

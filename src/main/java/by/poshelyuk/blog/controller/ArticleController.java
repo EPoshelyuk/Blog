@@ -36,7 +36,7 @@ public class ArticleController {
     public ResponseEntity<List<Article>> getPublicArticles() {
         List<Article> articles = articleService.getPublicArticle();
         if (articles.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         //  System.out.println(articles);
         return ResponseEntity.status(HttpStatus.OK).body(articles);

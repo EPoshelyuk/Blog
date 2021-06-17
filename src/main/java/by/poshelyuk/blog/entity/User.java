@@ -1,6 +1,7 @@
 package by.poshelyuk.blog.entity;
 
 
+import by.poshelyuk.blog.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+
 @Entity
 @Table(name = "USERS")
 @Data
@@ -50,11 +52,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-//    @Column(name = "ROLE")
-//    private String Role;
-//
-//    @Column(name = "ENABLED")
-//    private boolean enabled;
+    @Column(name = "ROLE")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "ENABLED")
+    private boolean enabled;
 
 }
 //    User {

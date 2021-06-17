@@ -33,7 +33,7 @@ public class CommentController {
     public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable String id) {
         List<Comment> comments = commentService.getByArticleId(id);
         if (CollectionUtils.isEmpty(comments)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class CommentController {
     public ResponseEntity<Comment> getCommentByIdAndArticleId(@PathVariable String articleId, @PathVariable String commentId) {
         Comment comment = commentService.getCommentByIdAndArticleId(articleId, commentId);
         if (comment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
