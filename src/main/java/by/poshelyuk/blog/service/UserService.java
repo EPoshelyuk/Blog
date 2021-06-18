@@ -7,12 +7,14 @@ import java.util.List;
 
 public interface UserService {
 
-    User register(User user) throws UserAlreadyExistsException;
+    User saveUser(User user) throws UserAlreadyExistsException;
 
     List<User> getAll();
 
-    User findByEmail(String email);
+    User findByEmailAndPassword (String email, String password);
 
     User findById(String id);
+
+    User findByEmail(String email);
 
 }

@@ -6,12 +6,13 @@ import java.util.List;
 
 public interface UserDAO {
 
-    User register(User user);
+    User save(User user);
 
     List<User> getAll();
 
-    User findByEmail(String email);
+    User findByEmailAndPassword(String email, String password);
 
     User findById(String id);
 
+    User findByEmail(String email);
 }

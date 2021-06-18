@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
     SessionFactory sessionFactory;
 
     @Override
-    public User register(User user) {
+    public User save(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
         return user;
@@ -31,10 +31,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmailAndPassword(String userEmail, String userPassword) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createQuery("FROM User u WHERE u.email=:email");
-        query.setParameter("email", email);
+        Query<User> query = session.createQuery("FROM User u WHERE u.email=:userEmail AND u.password=:userPassword");
+        query.setParameter("userEmail", userEmail);
+        query.setParameter("userPassword", userPassword);
         return query.uniqueResult();
     }
 
@@ -43,5 +44,13 @@ public class UserDAOImpl implements UserDAO {
         Session session = sessionFactory.getCurrentSession();
         User user = session.get(User.class, id);
         return user;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<User> query = session.createQuery("FROM User u WHERE u.email=:userEmail");
+        query.setParameter("userEmail", email);
+        return query.uniqueResult();
     }
 }
