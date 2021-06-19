@@ -27,10 +27,7 @@ public class Tag {
 
     @JsonIgnore
     @ToString.Exclude
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags" , fetch = FetchType.EAGER)
     private List<Article> articles;
 }
-//    Tag {
-//        id: Integer/UID,
-//                name: String
-//    }
+

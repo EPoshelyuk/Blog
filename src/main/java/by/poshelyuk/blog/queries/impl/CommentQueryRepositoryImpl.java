@@ -20,19 +20,18 @@ import java.util.List;
 @NoArgsConstructor
 public class CommentQueryRepositoryImpl implements CommentQueryRepository {
 
-    @Autowired
-    SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     public List<Comment> findAll(Page page, CommentSortProvider commentSortProvider) {
-        CriteriaBuilder criteriaBuilder = sessionFactory.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Comment> criteriaQuery = criteriaBuilder.createQuery(Comment.class);
         Root<Comment> root = criteriaQuery.from(Comment.class);
         criteriaQuery.orderBy(commentSortProvider.getSortOrder(root, criteriaBuilder));
         Integer skip = page.getSkip();
         Integer limit = page.getLimit();
-        return sessionFactory.getCurrentSession()
-                .createQuery(criteriaQuery)
+        return entityManager.createQuery(criteriaQuery)
                 .setFirstResult((skip - 1) * limit)
                 .setMaxResults(limit)
                 .getResultList();

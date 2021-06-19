@@ -21,6 +21,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 public class AuthController {
+
     @Autowired
     private UserService userService;
 

@@ -13,10 +13,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-
+@Slf4j
 @Component
 @PropertySource("classpath:application.properties")
-@Slf4j
 public class JwtProvider {
 
     @Value("$(jwt.token.secret)")

@@ -31,14 +31,13 @@ public class ArticleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //+
+//+
     @GetMapping(path = "/articles")
     public ResponseEntity<List<Article>> getPublicArticles() {
         List<Article> articles = articleService.getPublicArticle();
         if (articles.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        //  System.out.println(articles);
         return ResponseEntity.status(HttpStatus.OK).body(articles);
     }
 
@@ -53,7 +52,7 @@ public class ArticleController {
         //TODO after adding spring sec.
         return null;
     }
-
+    //+
     @GetMapping(path = "/filter")
     public ResponseEntity<List<Article>> getSortedArticles(
             @RequestParam(name = "skip", required = false, defaultValue = "1") Integer skip,
@@ -65,4 +64,6 @@ public class ArticleController {
         List<Article> articles = articleService.findAll(skip, limit, sort, order);
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
+
+
 }

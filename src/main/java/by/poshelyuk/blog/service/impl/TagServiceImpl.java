@@ -1,13 +1,10 @@
 package by.poshelyuk.blog.service.impl;
 
-import by.poshelyuk.blog.dao.ArticleDAO;
-import by.poshelyuk.blog.dao.TagDAO;
 import by.poshelyuk.blog.entity.Article;
-import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.Tag;
-import by.poshelyuk.blog.filtration.Page;
-import by.poshelyuk.blog.filtration.impl.CommentSortProvider;
-import by.poshelyuk.blog.queries.CommentQueryRepository;
+
+import by.poshelyuk.blog.repository.ArticleRepository;
+import by.poshelyuk.blog.repository.TagRepository;
 import by.poshelyuk.blog.service.TagService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,43 +18,29 @@ import java.util.stream.Collectors;
 @Service
 public class TagServiceImpl implements TagService {
 
-    private final TagDAO tagDAO;
-    private final ArticleDAO articleDAO;
+    private final TagRepository tagRepository;
+    private final ArticleRepository articleRepository;
 
-    public TagServiceImpl(TagDAO tagDAO, ArticleDAO articleDAO, CommentQueryRepository commentQueryRepository) {
-        this.tagDAO = tagDAO;
-        this.articleDAO = articleDAO;
+    public TagServiceImpl(TagRepository tagRepository, ArticleRepository articleRepository) {
+        this.tagRepository = tagRepository;
+        this.articleRepository = articleRepository;
     }
 
-
-    @Override
-    @Transactional
     public List<Article> getArticlesByTagsNames(List<String> tagNames) {
 
+
         List<Tag> tags = tagNames.stream()
-                .map(tagDAO::findByName)
+                .map(tagRepository::findByName)
                 .collect(Collectors.toList());
 
         List<Article> articles = new ArrayList<>();
-
-
-//        for (Tag tag : tags) {
-//            List<Article> allByTag = articleDAO.getAllByTag(tag);
-//            articles.addAll(allByTag);
-//        }
-
-        tags.forEach(tag -> articles.addAll(articleDAO.getAllByTag(tag)));
-
+        tags.forEach(tag -> articles.addAll(articleRepository.getAllByTag(tag)));
         return articles;
-
-
     }
 
-    @Override
-    @Transactional
     public Map<String, Integer> getTagCloud() {
 
-        List<Tag> tags = tagDAO.findAll();
+        List<Tag> tags = tagRepository.findAll();
 
         int count;
         HashMap<String, Integer> tagCloud = new HashMap<>();
@@ -67,10 +50,6 @@ public class TagServiceImpl implements TagService {
             tagCloud.put(tag.getName(), count);
         }
         return tagCloud;
-    }
-
-    public TagDAO getTagDAO() {
-        return tagDAO;
     }
 
 

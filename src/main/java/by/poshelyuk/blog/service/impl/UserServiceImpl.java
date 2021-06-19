@@ -1,9 +1,8 @@
 package by.poshelyuk.blog.service.impl;
 
-import by.poshelyuk.blog.dao.UserDAO;
 import by.poshelyuk.blog.entity.User;
 import by.poshelyuk.blog.entity.enums.Role;
-import by.poshelyuk.blog.exception.UserAlreadyExistsException;
+import by.poshelyuk.blog.repository.UserRepository;
 import by.poshelyuk.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,13 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
-    private final UserDAO userDAO;
+    private final UserRepository userRepository;
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
       // RoleEntity userRole = roleEntityRepository.findByName("ROLE_USER");
         user.setRole(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userDAO.save(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -56,11 +55,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(String id) {
-        return userDAO.findById(id);
+        return userRepository.findById(id).get();
     }
 
     public User findByEmail(String email) {
-        User result = userDAO.findByEmail(email);
+        User result = userRepository.findByEmail(email);
         if (result == null) {
             log.error("IN findByEmail - user by email: {} not found", email);
         }

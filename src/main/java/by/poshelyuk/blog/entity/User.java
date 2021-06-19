@@ -11,20 +11,21 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-@Component
+
 @Entity
 @Table(name = "USERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@Component
 public class User {
 
     @Id
     @GeneratedValue(generator = "uuid-generator")
     @GenericGenerator(name = "uuid-generator", strategy = "uuid")
     @Column(name = "USER_ID")
-    private String userId;
+    private String id;
 
     @Column(name = "FIRST_NAME")
     private String firstName;
