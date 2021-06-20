@@ -1,4 +1,4 @@
-package by.poshelyuk.blog.config.config;
+package by.poshelyuk.blog.config;
 
 import com.mysql.cj.jdbc.Driver;
 import com.zaxxer.hikari.HikariConfig;

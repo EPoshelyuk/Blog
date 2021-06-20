@@ -1,4 +1,4 @@
-package by.poshelyuk.blog.config.config;
+package by.poshelyuk.blog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

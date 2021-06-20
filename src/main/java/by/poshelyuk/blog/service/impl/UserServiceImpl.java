@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-      // RoleEntity userRole = roleEntityRepository.findByName("ROLE_USER");
         user.setRole(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
@@ -65,5 +64,6 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
 
 }

@@ -25,15 +25,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/register")
-//    public String registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
-//        UserEntity u = new UserEntity();
-//        u.setPassword(registrationRequest.getPassword());
-//        u.setLogin(registrationRequest.getLogin());
-//        userService.saveUser(u);
-//        return "OK";
-//    }
-
     @PostMapping("/auth")
     public ResponseEntity authResponse(@Valid @RequestBody AuthRequest request, BindingResult
             bindingResult) {

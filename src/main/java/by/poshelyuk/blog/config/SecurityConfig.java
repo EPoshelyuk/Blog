@@ -1,4 +1,4 @@
-package by.poshelyuk.blog.config.config;
+package by.poshelyuk.blog.config;
 
 import by.poshelyuk.blog.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
