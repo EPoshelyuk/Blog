@@ -2,10 +2,8 @@ package by.poshelyuk.blog.controller;
 
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +16,10 @@ public class TagController {
 
     private final TagService tagService;
 
-    @Autowired
     public TagController(TagService tagService) {
         this.tagService = tagService;
     }
-//+
+
     @GetMapping("/articles/tags")
     public ResponseEntity<List<Article>> getArticlesByTagsNames(@RequestParam List<String> tagNames) {
         List<Article> articles = tagService.getArticlesByTagsNames(tagNames);

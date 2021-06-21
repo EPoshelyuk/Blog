@@ -28,6 +28,9 @@ public interface ArticleRepository extends JpaRepository<Article, String> {
 
     @Query("SELECT a FROM Article a WHERE :tag MEMBER a.tags")
     List<Article> getAllByTag(@Param("tag") Tag tag);
+
+    @Query("SELECT a FROM Article a WHERE a.user.id=?1")
+    List<Article> findAllByUserEmail(String email);
 }
 
 

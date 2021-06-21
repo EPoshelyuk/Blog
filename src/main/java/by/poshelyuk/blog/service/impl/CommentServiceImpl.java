@@ -42,5 +42,8 @@ public class CommentServiceImpl implements CommentService {
         return commentQueryRepository.findAll(new Page(skip, limit), new CommentSortProvider(sort, order));
     }
 
-
+    @Override
+    public Comment findById(String commentId) {
+        return commentRepository.findById(commentId).get();
+    }
 }

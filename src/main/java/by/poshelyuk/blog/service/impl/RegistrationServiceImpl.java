@@ -8,7 +8,6 @@ import by.poshelyuk.blog.repository.UserRepository;
 import by.poshelyuk.blog.service.EmailService;
 import by.poshelyuk.blog.service.RedisService;
 import by.poshelyuk.blog.service.RegistrationService;
-import jdk.jfr.consumer.RecordingFile;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,7 +27,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.userRepository = userRepository;
         this.redisService = redisService;
     }
-
 
     public void register(User user) throws UserAlreadyExistsException {
         User userFromDb = userRepository.findByEmail(user.getEmail());
@@ -53,5 +51,4 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new ActivationCodeNotFoundException(byKey);
         }
     }
-
 }

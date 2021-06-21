@@ -28,6 +28,7 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -70,6 +71,7 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring-security-version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -141,8 +143,6 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.1</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -213,7 +213,6 @@
                     <password>tomcat</password>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>

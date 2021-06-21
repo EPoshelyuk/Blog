@@ -15,17 +15,14 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private final UserRepository userRepository;
 
-    @Autowired
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     public User saveUser(User user) {
@@ -64,6 +61,4 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-
-
 }

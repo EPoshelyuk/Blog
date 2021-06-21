@@ -7,7 +7,6 @@ import by.poshelyuk.blog.filtration.impl.ArticleSortProvider;
 import by.poshelyuk.blog.queries.ArticleQueryRepository;
 import by.poshelyuk.blog.repository.ArticleRepository;
 import by.poshelyuk.blog.service.ArticleService;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,4 +38,23 @@ public class ArticleServiceImpl implements ArticleService {
         return articleQueryRepository.findAll(new Page(skip, limit), new ArticleSortProvider(sort, order));
     }
 
+    @Override
+    public Article findById(String id) {
+        return articleRepository.findById(id).get();
+    }
+
+    @Override
+    public void update(Article article) {
+        articleRepository.save(article);
+    }
+
+    @Override
+    public List<Article> findAllByUserEmail(String email) {
+        return articleRepository.findAllByUserEmail(email);
+    }
+
+    @Override
+    public void delete(String id) {
+        articleRepository.deleteById(id);
+    }
 }

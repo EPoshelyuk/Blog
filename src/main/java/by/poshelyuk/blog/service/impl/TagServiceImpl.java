@@ -7,7 +7,6 @@ import by.poshelyuk.blog.repository.ArticleRepository;
 import by.poshelyuk.blog.repository.TagRepository;
 import by.poshelyuk.blog.service.TagService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,30 +26,22 @@ public class TagServiceImpl implements TagService {
     }
 
     public List<Article> getArticlesByTagsNames(List<String> tagNames) {
-
-
         List<Tag> tags = tagNames.stream()
                 .map(tagRepository::findByName)
                 .collect(Collectors.toList());
-
         List<Article> articles = new ArrayList<>();
         tags.forEach(tag -> articles.addAll(articleRepository.getAllByTag(tag)));
         return articles;
     }
 
     public Map<String, Integer> getTagCloud() {
-
         List<Tag> tags = tagRepository.findAll();
-
         int count;
         HashMap<String, Integer> tagCloud = new HashMap<>();
-
         for (Tag tag : tags) {
             count = tag.getArticles().size();
             tagCloud.put(tag.getName(), count);
         }
         return tagCloud;
     }
-
-
 }

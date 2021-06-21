@@ -82,5 +82,4 @@ public class DataConfig {
         properties.put(PROP_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROP_HIBERNATE_HBM2DDL_AUTO));
         return properties;
     }
-
 }

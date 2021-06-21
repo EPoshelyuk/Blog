@@ -7,18 +7,17 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+
 @Slf4j
 @Component
-@PropertySource("classpath:application.properties")
 public class JwtProvider {
 
-    @Value("$(jwt.token.secret)")
+    @Value("${jwt.token.secret}")
     private String jwtSecret;
 
     public String generateToken(String login) {
@@ -29,6 +28,7 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
@@ -39,7 +39,7 @@ public class JwtProvider {
         }
     }
 
-    public String getEmailFromToken(String token){
+    public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
