@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -27,7 +28,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         user.setRole(Role.ROLE_USER);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String encode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encode);
         return userRepository.save(user);
     }
 
@@ -38,15 +40,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmailAndPassword(String email, String password) {
-        User result = findByEmail(email);
-        if (result == null) {
+        User user = findByEmail(email);
+        if (user == null) {
             throw new UsernameNotFoundException(String.format("User with email: %s not found", email));
         }
-        if (!passwordEncoder.matches(password, result.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             log.error("IN findByEmailAndPassword - user by email: {} invalid password", email);
             throw new UsernameNotFoundException(String.format("User with email: %s not found", email));
         }
-        return result;
+        return user;
     }
 
     @Override
@@ -55,10 +57,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByEmail(String email) {
-        User result = userRepository.findByEmail(email);
-        if (result == null) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
             log.error("IN findByEmail - user by email: {} not found", email);
         }
-        return result;
+        return user;
     }
 }

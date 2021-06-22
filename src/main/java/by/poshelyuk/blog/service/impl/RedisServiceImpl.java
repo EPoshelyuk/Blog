@@ -16,7 +16,6 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public void save(String key, String value) {
         redisRepository.save(key, value);
-
     }
 
     @Override

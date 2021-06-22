@@ -2,6 +2,7 @@ package by.poshelyuk.blog.controller;
 
 import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.User;
+import by.poshelyuk.blog.exception.ArticleNotFoundException;
 import by.poshelyuk.blog.service.ArticleService;
 import by.poshelyuk.blog.service.CommentService;
 import by.poshelyuk.blog.service.UserService;
@@ -30,7 +31,7 @@ public class CommentController {
     }
 
     @PostMapping("/articles/{id}/comments")
-    public ResponseEntity<String> addComment(@PathVariable String id, @RequestBody Comment comment, Authentication authentication) {
+    public ResponseEntity<String> addComment(@PathVariable String id, @RequestBody Comment comment, Authentication authentication) throws ArticleNotFoundException {
 
         User user = userService.findByEmail((String) authentication.getPrincipal());
         comment.setUser(user);

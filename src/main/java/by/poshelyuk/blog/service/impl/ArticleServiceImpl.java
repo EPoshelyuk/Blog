@@ -17,7 +17,6 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleQueryRepository articleQueryRepository;
 
-
     public ArticleServiceImpl(ArticleRepository articleRepository, ArticleQueryRepository articleQueryRepository) {
         this.articleRepository = articleRepository;
         this.articleQueryRepository = articleQueryRepository;

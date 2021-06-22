@@ -14,30 +14,30 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static org.springframework.util.StringUtils.hasText;
+import static io.jsonwebtoken.lang.Strings.hasText;
 
-@Slf4j
 @Component
+@Slf4j
 public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
-    public static final String BEARER = "Bearer_";
+    public static final String BEARER = "Bearer ";
 
     private final JwtProvider jwtProvider;
-    private final JwtUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public JwtFilter(JwtProvider jwtProvider, JwtUserDetailsService customUserDetailsService) {
+    public JwtFilter(JwtProvider jwtProvider, CustomUserDetailsService customUserDetailsService) {
         this.jwtProvider = jwtProvider;
         this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException, IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateToken(token)) {
             String email = jwtProvider.getEmailFromToken(token);
-            JwtUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(email);
+            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(email);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

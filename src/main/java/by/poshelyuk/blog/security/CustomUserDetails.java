@@ -8,17 +8,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class JwtUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
+
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
-    public static JwtUserDetails fromUserToCustomUserDetails(User user) {
-        JwtUserDetails jwtUserDetails = new JwtUserDetails();
-        jwtUserDetails.email = user.getEmail();
-        jwtUserDetails.password = user.getPassword();
-        jwtUserDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
-        return jwtUserDetails;
+    public static CustomUserDetails fromUserToCustomUserDetails(User user) {
+        CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.email = user.getEmail();
+        customUserDetails.password = user.getPassword();
+        customUserDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
+        return customUserDetails;
     }
 
     @Override
@@ -43,7 +44,8 @@ public class JwtUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+
+        return true;
     }
 
     @Override

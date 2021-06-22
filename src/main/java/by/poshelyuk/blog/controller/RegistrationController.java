@@ -5,6 +5,7 @@ import by.poshelyuk.blog.exception.ActivationCodeNotFoundException;
 import by.poshelyuk.blog.exception.UserAlreadyExistsException;
 import by.poshelyuk.blog.service.RegistrationService;
 import by.poshelyuk.blog.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class RegistrationController {
     private final UserService userService;
     private final RegistrationService registrationService;
 
+    @Autowired
     public RegistrationController(UserService userService, RegistrationService registrationService) {
         this.userService = userService;
         this.registrationService = registrationService;
