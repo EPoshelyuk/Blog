@@ -1,5 +1,6 @@
 package by.poshelyuk.blog.controller;
 
+import by.poshelyuk.blog.dto.ArticleDto;
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.entity.User;
 import by.poshelyuk.blog.exception.ArticleNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,7 @@ public class ArticleController {
     }
 
     @PutMapping("/articles/{id}")
-    public ResponseEntity<String> update(@PathVariable String id, @RequestBody Article article, Authentication authentication){
+    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody ArticleDto articleDto, Authentication authentication){
 
         User userByAuth = userService.findByEmail((String) authentication.getPrincipal());
         User userById = userService.findById(id);
@@ -36,37 +38,37 @@ public class ArticleController {
 
         Article articleFromDB = articleService.findById(id);
         if (articleFromDB == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            articleService.update(article);
+            articleService.update(articleDto);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody Article article) {
-        articleService.addArticle(article);
+    public ResponseEntity<ArticleDto> addArticle(@Valid @RequestBody ArticleDto articleDto) {
+        articleService.addArticle(articleDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "/articles")
-    public ResponseEntity<List<Article>> getPublicArticles() {
-        List<Article> articles = articleService.getPublicArticle();
-        if (articles.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity<List<ArticleDto>> getPublicArticles() {
+        List<ArticleDto> articlesDto = articleService.getPublicArticle();
+        if (articlesDto.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(articles);
+        return ResponseEntity.status(HttpStatus.OK).body(articlesDto);
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<Article>> getArticlesByUser(Authentication authentication) {
+    public ResponseEntity<List<ArticleDto>> getArticlesByUser(Authentication authentication) {
 
         String userEmail = authentication.getPrincipal().toString();
-        List<Article> articles = articleService.findAllByUserEmail(userEmail);
-        if (articles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<ArticleDto> articlesDto = articleService.findAllByUserEmail(userEmail);
+        if (articlesDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(articles, HttpStatus.OK);
+            return new ResponseEntity<>(articlesDto, HttpStatus.OK);
         }
     }
 
@@ -83,12 +85,12 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/filter")
-    public ResponseEntity<List<Article>> getSortedArticles(
+    public ResponseEntity<List<ArticleDto>> getSortedArticles(
             @RequestParam(name = "skip", required = false, defaultValue = "1") Integer skip,
             @RequestParam(name = "limit", required = false, defaultValue = "3") Integer limit,
             @RequestParam(name = "sort", required = false) String sort,
             @RequestParam(name = "order", required = false) String order) {
-        List<Article> articles = articleService.findAll(skip, limit, sort, order);
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+        List<ArticleDto> articlesDto = articleService.findAll(skip, limit, sort, order);
+        return new ResponseEntity<>(articlesDto, HttpStatus.OK);
     }
 }

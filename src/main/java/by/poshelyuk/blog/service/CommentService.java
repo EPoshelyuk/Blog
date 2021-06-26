@@ -1,18 +1,18 @@
 package by.poshelyuk.blog.service;
 
-import by.poshelyuk.blog.entity.Comment;
+import by.poshelyuk.blog.dto.CommentDto;
 
 import java.util.List;
 
 public interface CommentService {
 
-    void addComment(Comment comment);
+    void addComment(CommentDto commentDto);
 
-    List<Comment> findByArticleId(String id);
+    List<CommentDto> findByArticleId(String id);
 
-    Comment getCommentByIdAndArticleId(String articleId, String commentId);
+    CommentDto getCommentByIdAndArticleId(String articleId, String commentId);
 
-    List<Comment> findAll(Integer skip, Integer limit, String sort, String order);
+    List<CommentDto> findAll(Integer skip, Integer limit, String sort, String order);
 
-    Comment findById(String commentId);
+    CommentDto findById(String commentId);
 }

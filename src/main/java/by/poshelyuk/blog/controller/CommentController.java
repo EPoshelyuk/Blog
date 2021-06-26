@@ -1,5 +1,6 @@
 package by.poshelyuk.blog.controller;
 
+import by.poshelyuk.blog.dto.CommentDto;
 import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.User;
 import by.poshelyuk.blog.exception.ArticleNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,40 +33,40 @@ public class CommentController {
     }
 
     @PostMapping("/articles/{id}/comments")
-    public ResponseEntity<String> addComment(@PathVariable String id, @RequestBody Comment comment, Authentication authentication) throws ArticleNotFoundException {
+    public ResponseEntity<String> addComment(@PathVariable String id, @Valid @RequestBody CommentDto commentDto, Authentication authentication) throws ArticleNotFoundException {
 
         User user = userService.findByEmail((String) authentication.getPrincipal());
-        comment.setUser(user);
-        comment.setArticle(articleService.findById(id));
-        commentService.addComment(comment);
+        commentDto.setUser(user);
+        commentDto.setArticle(articleService.findById(id));
+        commentService.addComment(commentDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/articles/{id}/comments")
-    public ResponseEntity<List<Comment>> getCommentsByArticleId(@PathVariable String id) {
-        List<Comment> comments = commentService.findByArticleId(id);
-        if (CollectionUtils.isEmpty(comments)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<CommentDto>> getCommentsByArticleId(@PathVariable String id) {
+        List<CommentDto> commentDtos = commentService.findByArticleId(id);
+        if (CollectionUtils.isEmpty(commentDtos)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+        return new ResponseEntity<>(commentDtos, HttpStatus.OK);
     }
 
     @GetMapping("/articles/{articleId}/comments/{commentId}")
-    public ResponseEntity<Comment> getCommentByIdAndArticleId(@PathVariable String articleId, @PathVariable String commentId) {
-        Comment comment = commentService.getCommentByIdAndArticleId(articleId, commentId);
-        if (comment == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<CommentDto> getCommentByIdAndArticleId(@PathVariable String articleId, @PathVariable String commentId) {
+        CommentDto commentDto = commentService.getCommentByIdAndArticleId(articleId, commentId);
+        if (commentDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(comment, HttpStatus.OK);
+        return new ResponseEntity<>(commentDto, HttpStatus.OK);
     }
 
     @GetMapping(path = "/comments/filter")
-    public ResponseEntity<List<Comment>> getSortedComments(
+    public ResponseEntity<List<CommentDto>> getSortedComments(
             @RequestParam(name = "skip", required = false, defaultValue = "1") Integer skip,
             @RequestParam(name = "limit", required = false, defaultValue = "5") Integer limit,
             @RequestParam(name = "sort", required = false) String sort,
             @RequestParam(name = "order", required = false) String order) {
-        List<Comment> comments = commentService.findAll(skip, limit, sort, order);
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+        List<CommentDto> commentDtos = commentService.findAll(skip, limit, sort, order);
+        return new ResponseEntity<>(commentDtos, HttpStatus.OK);
     }
 }

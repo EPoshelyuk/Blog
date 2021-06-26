@@ -1,5 +1,7 @@
 package by.poshelyuk.blog.service.impl;
 
+import by.poshelyuk.blog.dto.ArticleDto;
+import by.poshelyuk.blog.dto.converter.ArticleConverter;
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.entity.Tag;
 
@@ -19,19 +21,24 @@ public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
     private final ArticleRepository articleRepository;
+    private final ArticleConverter articleConverter;
 
-    public TagServiceImpl(TagRepository tagRepository, ArticleRepository articleRepository) {
+    public TagServiceImpl(TagRepository tagRepository, ArticleRepository articleRepository, ArticleConverter articleConverter) {
         this.tagRepository = tagRepository;
         this.articleRepository = articleRepository;
+        this.articleConverter = articleConverter;
     }
 
-    public List<Article> getArticlesByTagsNames(List<String> tagNames) {
+    public List<ArticleDto> getArticlesByTagsNames(List<String> tagNames) {
         List<Tag> tags = tagNames.stream()
                 .map(tagRepository::findByName)
                 .collect(Collectors.toList());
+
         List<Article> articles = new ArrayList<>();
         tags.forEach(tag -> articles.addAll(articleRepository.getAllByTag(tag)));
-        return articles;
+
+        return articles.stream().map(articleConverter::convertToDto).collect(Collectors.toList());
+
     }
 
     public Map<String, Integer> getTagCloud() {

@@ -1,13 +1,13 @@
 package by.poshelyuk.blog.service;
 
-import by.poshelyuk.blog.entity.Article;
+import by.poshelyuk.blog.dto.ArticleDto;
 
 import java.util.List;
 import java.util.Map;
 
 public interface TagService {
 
-    List<Article> getArticlesByTagsNames(List<String> tagNames);
+    List<ArticleDto> getArticlesByTagsNames(List<String> tagNames);
 
     Map<String, Integer> getTagCloud();
 }

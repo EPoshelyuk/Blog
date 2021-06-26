@@ -1,5 +1,7 @@
 package by.poshelyuk.blog.service.impl;
 
+import by.poshelyuk.blog.dto.CommentDto;
+import by.poshelyuk.blog.dto.converter.CommentConverter;
 import by.poshelyuk.blog.entity.Comment;
 
 import by.poshelyuk.blog.filtration.Page;
@@ -10,40 +12,45 @@ import by.poshelyuk.blog.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentQueryRepository commentQueryRepository;
+    private final CommentConverter commentConverter;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentQueryRepository commentQueryRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, CommentQueryRepository commentQueryRepository, CommentConverter commentConverter) {
         this.commentRepository = commentRepository;
         this.commentQueryRepository = commentQueryRepository;
+        this.commentConverter = commentConverter;
     }
 
     @Override
-    public void addComment(Comment comment) {
-        commentRepository.save(comment);
+    public void addComment(CommentDto commentDto) {
+        commentRepository.save(commentConverter.convertToEntity(commentDto));
     }
 
     @Override
-    public List<Comment> findByArticleId(String id) {
-        return commentRepository.findByArticleId(id);
+    public List<CommentDto> findByArticleId(String id) {
+        List<Comment> comments = commentRepository.findByArticleId(id);
+        return comments.stream().map(commentConverter::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Comment getCommentByIdAndArticleId(String articleId, String commentId) {
-        return commentRepository.getCommentByIdAndArticleId(articleId, commentId);
+    public CommentDto getCommentByIdAndArticleId(String articleId, String commentId) {
+        return commentConverter.convertToDto(commentRepository.getCommentByIdAndArticleId(articleId, commentId));
     }
 
     @Override
-    public List<Comment> findAll(Integer skip, Integer limit, String sort, String order) {
-        return commentQueryRepository.findAll(new Page(skip, limit), new CommentSortProvider(sort, order));
+    public List<CommentDto> findAll(Integer skip, Integer limit, String sort, String order) {
+        List<Comment> comments = commentQueryRepository.findAll(new Page(skip, limit), new CommentSortProvider(sort, order));
+        return comments.stream().map(commentConverter::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Comment findById(String commentId) {
-        return commentRepository.findById(commentId).get();
+    public CommentDto findById(String commentId) {
+        return commentConverter.convertToDto(commentRepository.findById(commentId).get());
     }
 }

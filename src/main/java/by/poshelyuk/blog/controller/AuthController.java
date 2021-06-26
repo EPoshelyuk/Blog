@@ -1,6 +1,6 @@
 package by.poshelyuk.blog.controller;
 
-import by.poshelyuk.blog.dto.AuthRequest;
+import by.poshelyuk.blog.dto.AuthRequestDto;
 import by.poshelyuk.blog.security.JwtProvider;
 import by.poshelyuk.blog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity authResponse(@Valid @RequestBody AuthRequest request, BindingResult bindingResult) {
+    public ResponseEntity authResponse(@Valid @RequestBody AuthRequestDto request, BindingResult bindingResult) {
         Map<String, Object> response = new HashMap<>();
 
         if (getResponseError(bindingResult, response)) {

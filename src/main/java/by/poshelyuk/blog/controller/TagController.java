@@ -1,5 +1,6 @@
 package by.poshelyuk.blog.controller;
 
+import by.poshelyuk.blog.dto.ArticleDto;
 import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +24,19 @@ public class TagController {
     }
 
     @GetMapping("/articles/tags")
-    public ResponseEntity<List<Article>> getArticlesByTagsNames(@RequestParam List<String> tagNames) {
-        List<Article> articles = tagService.getArticlesByTagsNames(tagNames);
-        if (articles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<ArticleDto>> getArticlesByTagsNames(@RequestParam List<String> tagNames) {
+        List<ArticleDto> articleDtos = tagService.getArticlesByTagsNames(tagNames);
+        if (articleDtos.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(articles, HttpStatus.OK);
+        return new ResponseEntity(articleDtos, HttpStatus.OK);
     }
 
     @GetMapping("/cloud")
     public ResponseEntity<Map<String, Integer>> getTagsCloud() {
         Map<String, Integer> tagCloud = tagService.getTagCloud();
         if (tagCloud.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(tagCloud, HttpStatus.OK);
     }
