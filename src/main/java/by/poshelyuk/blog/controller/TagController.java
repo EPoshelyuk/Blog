@@ -1,7 +1,6 @@
 package by.poshelyuk.blog.controller;
 
 import by.poshelyuk.blog.dto.ArticleDto;
-import by.poshelyuk.blog.entity.Article;
 import by.poshelyuk.blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

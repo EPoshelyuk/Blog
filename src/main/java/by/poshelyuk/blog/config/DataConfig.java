@@ -25,7 +25,6 @@ import java.util.Properties;
 @Configuration
 @ComponentScan("by.poshelyuk.blog")
 @EnableTransactionManagement
-@EnableWebMvc
 @EnableJpaRepositories("by.poshelyuk.blog.repository")
 public class DataConfig {
 
