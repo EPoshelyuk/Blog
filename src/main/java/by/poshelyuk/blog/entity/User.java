@@ -4,12 +4,14 @@ package by.poshelyuk.blog.entity;
 import by.poshelyuk.blog.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.sql.Date;
 import java.util.List;
 
@@ -19,7 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@Component
 public class User {
 
     @Id
@@ -61,13 +62,5 @@ public class User {
 
     @Column(name = "ENABLED")
     private boolean enabled;
-
 }
-//    User {
-//        id: Integer/UID,
-//                first_name: String,
-//                last_name: String,
-//                password: String,
-//                email: String,
-//                created_at: Date
-//    }
+

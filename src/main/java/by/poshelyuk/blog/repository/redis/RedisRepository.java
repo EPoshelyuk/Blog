@@ -1,17 +1,10 @@
-package by.poshelyuk.blog.repository;
+package by.poshelyuk.blog.repository.redis;
 
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.TimeUnit;
-
-
-//Хэши Redis могут содержать n несколько пар ключ-значение и предназначены для использования меньшего объема памяти,
-// что делает их отличным способом хранения объектов в памяти.
-// С помощью HashOperations вспомогательного класса мы можем ими управлять.
-//Чтобы использовать любой из них, мы упаковываем возвращенные хеш-операции из RedisTemplate экземпляра
-// в HashOperations интерфейс:HashOperations hashOperations = redisTemplate.opsForHash();
 
 @Repository
 public class RedisRepository {

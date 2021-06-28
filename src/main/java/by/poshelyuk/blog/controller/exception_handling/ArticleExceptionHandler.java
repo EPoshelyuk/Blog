@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ArticleExceptionHandler {
+
     @ExceptionHandler
     public ResponseEntity<IncorrectData> handleException(UserAlreadyExistsException exception) {
         IncorrectData data = new IncorrectData();

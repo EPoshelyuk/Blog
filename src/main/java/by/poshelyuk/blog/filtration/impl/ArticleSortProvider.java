@@ -31,5 +31,4 @@ public class ArticleSortProvider implements SortProvider<Article> {
         }
         return new Order[]{criteriaBuilder.asc(root.get(sortBy))};
     }
-
 }

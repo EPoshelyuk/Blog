@@ -1,6 +1,6 @@
 package by.poshelyuk.blog.service.impl;
 
-import by.poshelyuk.blog.repository.RedisRepository;
+import by.poshelyuk.blog.repository.redis.RedisRepository;
 import by.poshelyuk.blog.service.RedisService;
 import org.springframework.stereotype.Service;
 

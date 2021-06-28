@@ -29,6 +29,7 @@ public class TagServiceImpl implements TagService {
         this.articleConverter = articleConverter;
     }
 
+    @Override
     public List<ArticleDto> getArticlesByTagsNames(List<String> tagNames) {
         List<Tag> tags = tagNames.stream()
                 .map(tagRepository::findByName)
@@ -41,6 +42,7 @@ public class TagServiceImpl implements TagService {
 
     }
 
+    @Override
     public Map<String, Integer> getTagCloud() {
         List<Tag> tags = tagRepository.findAll();
         int count;

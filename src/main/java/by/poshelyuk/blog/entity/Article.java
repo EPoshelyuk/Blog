@@ -62,6 +62,5 @@ public class Article {
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID")}
     )
     private List<Tag> tags;
-
 }
 

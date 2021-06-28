@@ -15,7 +15,6 @@ import java.util.UUID;
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
-
     private final String LINK = "http://localhost:8080/simple-blog/auth/confirm/%s/%s";
 
     private final EmailService emailService;
@@ -28,6 +27,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.redisService = redisService;
     }
 
+    @Override
     public void register(User user) throws UserAlreadyExistsException {
         User userFromDb = userRepository.findByEmail(user.getEmail());
         if (userFromDb != null) {
@@ -43,6 +43,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         redisService.save(user.getEmail(), activationCode);
     }
 
+    @Override
     public boolean checkActivationCode(String email, String code) throws ActivationCodeNotFoundException {
         String byKey = redisService.findByKey(email);
         if (code.equals(byKey)) {

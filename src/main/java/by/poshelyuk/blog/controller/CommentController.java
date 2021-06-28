@@ -1,7 +1,6 @@
 package by.poshelyuk.blog.controller;
 
 import by.poshelyuk.blog.dto.CommentDto;
-import by.poshelyuk.blog.entity.Comment;
 import by.poshelyuk.blog.entity.User;
 import by.poshelyuk.blog.exception.ArticleNotFoundException;
 import by.poshelyuk.blog.service.ArticleService;

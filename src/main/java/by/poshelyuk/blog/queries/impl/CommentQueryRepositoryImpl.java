@@ -5,8 +5,6 @@ import by.poshelyuk.blog.filtration.Page;
 import by.poshelyuk.blog.filtration.impl.CommentSortProvider;
 import by.poshelyuk.blog.queries.CommentQueryRepository;
 import lombok.NoArgsConstructor;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

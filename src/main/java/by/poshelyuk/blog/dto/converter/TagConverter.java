@@ -22,5 +22,4 @@ public class TagConverter {
         tagDto.setArticles(tag.getArticles());
         return tagDto;
     }
-
 }

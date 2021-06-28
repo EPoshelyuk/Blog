@@ -9,5 +9,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("by.poshelyuk.blog")
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
 }

@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface ArticleRepository extends JpaRepository<Article, String> {
 
     List<Article> getAllByStatus(Status status);
-    
+
     List<Article> findAll();
 
     void deleteById(String id);

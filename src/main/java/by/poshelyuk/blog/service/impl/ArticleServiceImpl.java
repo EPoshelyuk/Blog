@@ -9,7 +9,6 @@ import by.poshelyuk.blog.filtration.impl.ArticleSortProvider;
 import by.poshelyuk.blog.queries.ArticleQueryRepository;
 import by.poshelyuk.blog.repository.ArticleRepository;
 import by.poshelyuk.blog.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
