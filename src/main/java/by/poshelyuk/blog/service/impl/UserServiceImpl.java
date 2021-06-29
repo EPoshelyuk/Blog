@@ -4,7 +4,6 @@ import by.poshelyuk.blog.entity.User;
 import by.poshelyuk.blog.entity.enums.Role;
 import by.poshelyuk.blog.repository.UserRepository;
 import by.poshelyuk.blog.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

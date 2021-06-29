@@ -33,10 +33,9 @@ public class PasswordServiceImpl implements PasswordService {
         User user = (userService.findByEmail(authRequestDto.getEmail()));
         if (user != null && user.isEnabled()) {
             String activationCode = UUID.randomUUID().toString();
-            String message = String.format("Hello! Please, visit next link " + LINK, user.getEmail(), activationCode);
-            emailService.sendEmail(user.getEmail(), "New code", message);
+            String message = String.format("Hello! Please, visit next link: " + LINK, user.getEmail(), activationCode);
             redisService.save(user.getEmail(), activationCode);
-            emailService.sendEmail(user.getEmail(), user.getFirstName(), "reset password");
+            emailService.sendEmail(user.getEmail(), user.getFirstName(), message);
             return true;
         } else {
             return false;
