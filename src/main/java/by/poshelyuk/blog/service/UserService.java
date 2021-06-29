@@ -11,9 +11,11 @@ public interface UserService {
 
     List<User> getAll();
 
-    User findByEmailAndPassword (String email, String password);
+    User findByEmailAndPassword(String email, String password);
 
     User findById(String id);
 
     User findByEmail(String email);
+
+    void update(User user);
 }

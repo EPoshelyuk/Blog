@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -45,7 +44,6 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException(String.format("User with email: %s not found", email));
         }
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            log.error("IN findByEmailAndPassword - user by email: {} invalid password", email);
             throw new UsernameNotFoundException(String.format("User with email: %s not found", email));
         }
         return user;
@@ -58,10 +56,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            log.error("IN findByEmail - user by email: {} not found", email);
-        }
-        return user;
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
     }
 }

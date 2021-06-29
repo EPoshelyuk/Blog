@@ -17,7 +17,6 @@ import java.io.IOException;
 import static io.jsonwebtoken.lang.Strings.hasText;
 
 @Component
-@Slf4j
 public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
